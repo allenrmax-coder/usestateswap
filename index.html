@@ -148,6 +148,7 @@
       align-items: center;
       gap: 14px;
       min-width: 0;
+      flex: 1 1 auto;
     }
 
     .logo-box {
@@ -172,10 +173,15 @@
       display: block;
     }
 
+    .brand-text {
+      min-width: 0;
+    }
+
     .brand-text h1 {
       margin: 0;
       font-size: 1.15rem;
       line-height: 1.1;
+      white-space: nowrap;
     }
 
     .brand-text p {
@@ -195,12 +201,6 @@
     .nav-links a:hover {
       color: white;
     }
-
-    .nav-cta {
-      flex-shrink: 0;
-      white-space: nowrap;
-    }
-
 
     .btn {
       display: inline-flex;
@@ -784,7 +784,6 @@
       }
     }
 
-    
     @media (max-width: 700px) {
       .container {
         width: min(100% - 20px, var(--max));
@@ -802,20 +801,14 @@
 
       .nav {
         min-height: 72px;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 0;
       }
 
       .brand {
-        flex: 1 1 auto;
         min-width: 0;
-        align-items: center;
       }
 
       .brand-text h1 {
-        font-size: 1rem;
+        font-size: 0.98rem;
       }
 
       .brand-text p {
@@ -827,16 +820,12 @@
         height: 58px;
       }
 
-      .btn {
-        width: 100%;
+      .nav-cta {
+        display: none;
       }
 
-      .nav-cta {
+      .btn {
         width: 100%;
-        order: 3;
-        margin-top: 4px;
-        padding: 12px 18px;
-        border-radius: 16px;
       }
 
       .hero-actions {
@@ -848,10 +837,18 @@
       }
 
       .floating-cta {
-        display: none;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .floating-cta a {
+        width: 100%;
+        border-radius: 18px;
+        padding: 14px;
+        font-size: 0.95rem;
       }
     }
-
   </style>
 </head>
 <body>
