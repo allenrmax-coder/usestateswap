@@ -6,25 +6,24 @@
   <title>StateSwap | Student Marketplace</title>
   <meta
     name="description"
-    content="StateSwap is a peer-to-peer marketplace app for students, by students. Buy, sell, swap, and promote student-run services in a safer campus-focused community."
+    content="StateSwap is a student marketplace built for Penn State students to buy, sell, swap, and promote services in a safer peer-to-peer community."
   />
   <style>
     :root {
       --bg: #071120;
-      --bg-soft: #0d1b34;
+      --bg-2: #0a1730;
       --card: rgba(255, 255, 255, 0.08);
-      --card-strong: rgba(255, 255, 255, 0.12);
+      --card-2: rgba(255, 255, 255, 0.12);
       --text: #ffffff;
       --muted: rgba(255, 255, 255, 0.76);
-      --subtle: rgba(255, 255, 255, 0.55);
+      --subtle: rgba(255, 255, 255, 0.56);
       --border: rgba(130, 175, 255, 0.16);
       --blue-dark: #0a2a66;
       --blue-mid: #1f5fbf;
       --blue-light: #5ea2ff;
       --blue-ice: #dbeafe;
-      --green: #34d399;
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-      --radius-xl: 28px;
+      --radius-xl: 30px;
       --radius-lg: 22px;
       --radius-md: 16px;
       --max: 1200px;
@@ -41,13 +40,26 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
       background:
         radial-gradient(circle at 12% 18%, rgba(31, 95, 191, 0.18), transparent 22%),
         radial-gradient(circle at 85% 20%, rgba(94, 162, 255, 0.18), transparent 25%),
-        radial-gradient(circle at 52% 50%, rgba(10, 42, 102, 0.18), transparent 24%),
+        radial-gradient(circle at 52% 50%, rgba(10, 42, 102, 0.2), transparent 24%),
         linear-gradient(180deg, #06101e 0%, #09172c 100%);
-      color: var(--text);
-      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
+      z-index: 0;
     }
 
     a {
@@ -58,15 +70,17 @@
     .container {
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .blur-orb {
       position: fixed;
       border-radius: 999px;
-      filter: blur(80px);
+      filter: blur(90px);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.5;
+      opacity: 0.55;
       animation: floatOrb 12s ease-in-out infinite alternate;
     }
 
@@ -81,15 +95,15 @@
     .orb-2 {
       width: 320px;
       height: 320px;
-      background: rgba(94, 162, 255, 0.2);
+      background: rgba(94, 162, 255, 0.18);
       top: 140px;
       right: -100px;
       animation-delay: 1s;
     }
 
     .orb-3 {
-      width: 260px;
-      height: 260px;
+      width: 280px;
+      height: 280px;
       background: rgba(10, 42, 102, 0.22);
       top: 500px;
       left: 35%;
@@ -101,10 +115,21 @@
       to { transform: translateY(20px) translateX(10px) scale(1.08); }
     }
 
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
+
     header {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 40;
       backdrop-filter: blur(16px);
       background: rgba(6, 16, 30, 0.8);
       border-bottom: 1px solid var(--border);
@@ -126,30 +151,17 @@
     }
 
     .logo-box {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      display: grid;
-      place-items: center;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .logo-box-image {
       width: 68px;
       height: 68px;
       padding: 4px;
       border-radius: 20px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.14);
-    }
-
-    .logo-box-image::before {
-      display: none;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .brand-logo-img {
@@ -158,14 +170,6 @@
       object-fit: cover;
       border-radius: 16px;
       display: block;
-    }
-
-    .logo-inner {
-      display: none;
-    }
-
-    .brand-text {
-      min-width: 0;
     }
 
     .brand-text h1 {
@@ -204,6 +208,23 @@
       border: 1px solid transparent;
       cursor: pointer;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-120%);
+    }
+
+    .btn:hover::after {
+      animation: shimmer 0.9s ease;
     }
 
     .btn-primary {
@@ -231,7 +252,7 @@
     .hero {
       position: relative;
       z-index: 1;
-      padding: 72px 0 40px;
+      padding: 78px 0 46px;
     }
 
     .hero-grid {
@@ -264,9 +285,9 @@
 
     .hero h2 {
       margin: 0;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
+      font-size: clamp(3rem, 7vw, 5.8rem);
+      line-height: 0.93;
+      letter-spacing: -0.05em;
     }
 
     .gradient-text {
@@ -278,7 +299,7 @@
     }
 
     .hero p.main {
-      font-size: 1.14rem;
+      font-size: 1.12rem;
       line-height: 1.8;
       color: var(--muted);
       max-width: 680px;
@@ -309,6 +330,7 @@
       border: 1px solid var(--border);
       padding: 10px;
       box-shadow: var(--shadow);
+      animation: floatCard 5s ease-in-out infinite;
     }
 
     .hero-logo-showcase img {
@@ -331,6 +353,12 @@
       border-radius: 22px;
       padding: 18px;
       backdrop-filter: blur(10px);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
+      border-color: rgba(94,162,255,0.28);
     }
 
     .stat strong {
@@ -355,6 +383,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(16px);
       overflow: hidden;
+      animation: floatCard 6s ease-in-out infinite;
     }
 
     .phone::before {
@@ -394,6 +423,15 @@
       border-radius: var(--radius-lg);
       padding: 20px;
       backdrop-filter: blur(12px);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .card:hover,
+    .feature-mini:hover,
+    .list-item:hover,
+    .contact-link:hover {
+      transform: translateY(-4px);
+      border-color: rgba(94,162,255,0.28);
     }
 
     .card-strong {
@@ -474,6 +512,7 @@
       border-radius: 22px;
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
     .feature-mini h4 {
@@ -491,7 +530,7 @@
     section {
       position: relative;
       z-index: 1;
-      padding: 36px 0;
+      padding: 38px 0;
     }
 
     .section-head {
@@ -560,12 +599,6 @@
       line-height: 1.75;
     }
 
-    .feature-card,
-    .info-card,
-    .contact-card {
-      min-height: 100%;
-    }
-
     .launch-badge {
       display: inline-block;
       margin: 10px 0 16px;
@@ -593,8 +626,9 @@
       border-radius: 18px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.92);
       font-weight: 600;
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
     .list-item span:last-child {
@@ -660,7 +694,6 @@
     }
 
     .contact-link:hover {
-      transform: translateY(-2px);
       background: rgba(0,0,0,0.26);
     }
 
@@ -686,8 +719,23 @@
       line-height: 1.75;
     }
 
+    .floating-cta {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+    }
+
+    .floating-cta a {
+      border-radius: 999px;
+      padding: 15px 20px;
+      box-shadow: 0 18px 40px rgba(31,95,191,0.38);
+      backdrop-filter: blur(10px);
+      animation: floatCard 4s ease-in-out infinite;
+    }
+
     footer {
-      padding: 28px 0 40px;
+      padding: 28px 0 120px;
       color: var(--subtle);
       font-size: 0.92rem;
       position: relative;
@@ -753,6 +801,11 @@
         display: none;
       }
 
+      .logo-box {
+        width: 58px;
+        height: 58px;
+      }
+
       .btn {
         width: 100%;
       }
@@ -761,9 +814,21 @@
         flex-direction: column;
       }
 
-      .logo-box-image {
-        width: 58px;
-        height: 58px;
+      .hero-logo-showcase {
+        width: 150px;
+      }
+
+      .floating-cta {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .floating-cta a {
+        width: 100%;
+        border-radius: 18px;
+        padding: 14px;
+        font-size: 0.95rem;
       }
     }
   </style>
@@ -776,7 +841,7 @@
   <header>
     <div class="container nav">
       <a href="#" class="brand">
-        <div class="logo-box logo-box-image">
+        <div class="logo-box">
           <img src="IMG_5967.png" alt="StateSwap logo" class="brand-logo-img" />
         </div>
         <div class="brand-text">
@@ -796,7 +861,7 @@
         class="btn btn-primary"
         href="mailto:happyvalleyllc@gmail.com?subject=StateSwap Early Entrepreneurship Program&body=Hi StateSwap,%0D%0A%0D%0AI want to join the early entrepreneurship program and be part of the app early.%0D%0A%0D%0AName:%0D%0ASchool:%0D%0AInstagram or phone:%0D%0AWhat I want to sell, promote, or use StateSwap for:%0D%0A%0D%0AThanks!"
       >
-        Join Early Entrepreneurship Program
+        Join Early Program
       </a>
     </div>
   </header>
@@ -811,17 +876,17 @@
           </div>
 
           <h2>
-            Buy smarter.
+            Buy better.
             <span class="gradient-text">Sell easier.</span>
-            Swap and connect.
+            Build with us.
           </h2>
 
           <p class="main">
-            StateSwap is a peer-to-peer marketplace app for students, by students. We are launching with a Penn State-centered community in mind, while making it clear that we are not officially affiliated with Penn State at this stage.
+            StateSwap is a peer-to-peer student marketplace built to help Penn State students buy, sell, swap, and promote services in one cleaner, more trusted place.
           </p>
 
           <p class="sub">
-            The goal is to give students one cleaner, safer place to list items, find campus deals, discover student-run services, and build more direct peer-to-peer connections.
+            We’re starting with a Penn State-focused community and early entrepreneurship program. StateSwap is student-driven, but not officially affiliated with Penn State.
           </p>
 
           <div class="hero-actions">
@@ -829,9 +894,9 @@
               class="btn btn-primary"
               href="mailto:happyvalleyllc@gmail.com?subject=StateSwap Early Entrepreneurship Program&body=Hi StateSwap,%0D%0A%0D%0AI want early access to the app and the entrepreneurship program.%0D%0A%0D%0AName:%0D%0ASchool:%0D%0AInstagram or phone:%0D%0AWhat I want to sell, promote, or use StateSwap for:%0D%0A%0D%0AThanks!"
             >
-              Join the Early Program
+              Apply for Early Access
             </a>
-            <a class="btn btn-secondary" href="#how">See How It Works</a>
+            <a class="btn btn-secondary" href="#how">How It Works</a>
           </div>
 
           <div class="hero-logo-showcase">
@@ -841,15 +906,15 @@
           <div class="stats">
             <div class="stat">
               <strong>P2P</strong>
-              <span>Student-to-student</span>
+              <span>Student to student</span>
             </div>
             <div class="stat">
               <strong>Local</strong>
-              <span>Campus-first trust</span>
+              <span>Penn State focused</span>
             </div>
             <div class="stat">
-              <strong>Built</strong>
-              <span>By students</span>
+              <strong>Early</strong>
+              <span>Entrepreneur access</span>
             </div>
           </div>
         </div>
@@ -877,7 +942,7 @@
                   </div>
                   <div class="mini-box">
                     <div class="small-label">Built for</div>
-                    <strong>Listings + services</strong>
+                    <strong>Items + services</strong>
                   </div>
                 </div>
 
@@ -887,7 +952,7 @@
                     <div class="progress-bar"></div>
                   </div>
                   <div style="margin-top:10px; color:var(--muted); line-height:1.65; font-size:0.95rem;">
-                    Built for student trust, simple connections, and a cleaner campus marketplace feel.
+                    A cleaner place for students to connect, promote, and sell without the mess of random public marketplaces.
                   </div>
                 </div>
               </div>
@@ -895,16 +960,16 @@
 
             <div class="stack">
               <div class="feature-mini">
-                <h4>Student verification</h4>
-                <p>Peer-to-peer trust starts with stronger identity checks and clearer profiles.</p>
+                <h4>Student trust</h4>
+                <p>Built around student profiles, clearer identity, and stronger peer-to-peer accountability.</p>
               </div>
               <div class="feature-mini">
                 <h4>Marketplace + services</h4>
-                <p>Students can list items and offer services through one student-first platform.</p>
+                <p>List items, promote services, and help grow student-run businesses in one place.</p>
               </div>
               <div class="feature-mini">
-                <h4>Campus-first community</h4>
-                <p>A student-centered network designed to feel safer and more accountable than random public marketplaces.</p>
+                <h4>Built for campus life</h4>
+                <p>Made for the way students actually buy, sell, and connect on and around campus.</p>
               </div>
             </div>
           </div>
@@ -916,26 +981,26 @@
       <div class="container">
         <div class="section-head fade-up">
           <div class="section-kicker">How it works</div>
-          <h3>A smarter student marketplace for campus life</h3>
+          <h3>A simpler marketplace for students</h3>
         </div>
 
         <div class="three-grid">
           <div class="card step fade-up">
             <div class="step-number">01</div>
-            <h4>Create your student profile</h4>
-            <p>Create a profile that shows your school community, what you’re selling, what you’re looking for, or what service you offer.</p>
+            <h4>Create a profile</h4>
+            <p>Show your school, what you want to sell, what you’re looking for, or what service you offer.</p>
           </div>
 
           <div class="card step fade-up">
             <div class="step-number">02</div>
-            <h4>Match with real students</h4>
-            <p>Browse student listings, discover useful services, and connect with people in your community more directly.</p>
+            <h4>Post or discover</h4>
+            <p>Browse listings, find useful services, and connect with other students more directly.</p>
           </div>
 
           <div class="card step fade-up">
             <div class="step-number">03</div>
-            <h4>Connect with more confidence</h4>
-            <p>Peer-to-peer design, stronger trust signals, and student-centered transparency help make interactions feel safer and more accountable.</p>
+            <h4>Grow early</h4>
+            <p>Join early, get visibility, and help shape the platform while the community is still being built.</p>
           </div>
         </div>
       </div>
@@ -947,32 +1012,32 @@
           <div class="section-kicker">Why StateSwap</div>
           <div class="launch-badge">Penn State-focused launch • not officially affiliated with Penn State</div>
           <div class="section-head" style="margin-bottom:0;">
-            <h3>Built for the way students actually live</h3>
+            <h3>Built for the way students actually move</h3>
           </div>
           <p class="main" style="margin-top:18px; max-width:620px;">
-            Not just another marketplace. StateSwap is designed around the way students actually live: buying and selling essentials, finding useful student-run services, and making campus connections with less friction.
+            StateSwap is built for student deals, student services, and student businesses — not generic marketplace clutter.
           </p>
         </div>
 
         <div class="four-grid">
           <div class="card feature-card fade-up">
             <h4>Student marketplace</h4>
-            <p>Built for real student needs instead of broad, generic marketplace clutter.</p>
+            <p>A place for real student listings, finds, and swaps.</p>
           </div>
 
           <div class="card feature-card fade-up">
-            <h4>Safer peer-to-peer experience</h4>
-            <p>Because it is built around student-to-student interactions, trust signals and clearer profiles can make the experience feel safer and more reliable.</p>
+            <h4>Safer peer-to-peer feel</h4>
+            <p>Clearer profiles and a school-centered community make things feel more trustworthy.</p>
           </div>
 
           <div class="card feature-card fade-up">
-            <h4>Student services</h4>
-            <p>The platform can support student-run services alongside listings, helping small student businesses get discovered more easily.</p>
+            <h4>Service promotion</h4>
+            <p>Students can promote what they do and get discovered faster.</p>
           </div>
 
           <div class="card feature-card fade-up">
-            <h4>No secrets on the frontend</h4>
-            <p>This landing page uses no exposed API keys, no embedded credentials, and no insecure client-side storage.</p>
+            <h4>Clean and simple</h4>
+            <p>No bloated setup. Just a smoother place to connect and build early momentum.</p>
           </div>
         </div>
       </div>
@@ -984,29 +1049,29 @@
           <div>
             <div class="section-kicker">Safety + trust</div>
             <div class="section-head" style="margin-bottom:0;">
-              <h3>Designed with privacy and security in mind</h3>
+              <h3>Built with security in mind</h3>
             </div>
             <p class="main" style="margin-top:18px;">
-              This version is a secure front-end landing page only. It does not expose API keys, secrets, admin credentials, or private infrastructure details in the code.
+              This version is a front-end landing page only. It does not expose API keys, passwords, admin credentials, or private infrastructure details.
             </p>
           </div>
 
           <div class="safety-points">
             <div class="safety-point">
               <span class="check">✓</span>
-              <span>No API keys embedded in the client code.</span>
+              <span>No exposed API keys in the code.</span>
             </div>
             <div class="safety-point">
               <span class="check">✓</span>
-              <span>No fake login or unsafe data collection forms.</span>
+              <span>No fake login or risky form handling.</span>
             </div>
             <div class="safety-point">
               <span class="check">✓</span>
-              <span>Peer-to-peer trust is supported by clearer community identity and student-centered design.</span>
+              <span>Early interest goes straight through email.</span>
             </div>
             <div class="safety-point">
               <span class="check">✓</span>
-              <span>Easy to connect to secure back-end endpoints later if you build a full app.</span>
+              <span>Easy to connect to a secure backend later when the app grows.</span>
             </div>
           </div>
         </div>
@@ -1017,19 +1082,19 @@
       <div class="container card fade-up" style="padding:28px;">
         <div class="two-grid">
           <div>
-            <div class="section-kicker">What students need most</div>
+            <div class="section-kicker">What students can use it for</div>
             <div class="section-head" style="margin-bottom:0;">
-              <h3>One place for student listings, services, and campus connections</h3>
+              <h3>Listings, services, and early business growth</h3>
             </div>
           </div>
 
           <div class="list-grid">
-            <div class="list-item"><span>Student item listings</span><span>→</span></div>
-            <div class="list-item"><span>Student-run services</span><span>→</span></div>
-            <div class="list-item"><span>Campus deals and finds</span><span>→</span></div>
-            <div class="list-item"><span>Peer-to-peer exchanges</span><span>→</span></div>
-            <div class="list-item"><span>Service discovery</span><span>→</span></div>
-            <div class="list-item"><span>Student business visibility</span><span>→</span></div>
+            <div class="list-item"><span>Items for sale</span><span>→</span></div>
+            <div class="list-item"><span>Student services</span><span>→</span></div>
+            <div class="list-item"><span>Campus deals</span><span>→</span></div>
+            <div class="list-item"><span>Peer-to-peer swaps</span><span>→</span></div>
+            <div class="list-item"><span>Entrepreneur promotion</span><span>→</span></div>
+            <div class="list-item"><span>Early community access</span><span>→</span></div>
           </div>
         </div>
       </div>
@@ -1043,7 +1108,7 @@
             <h3>Join early and help shape StateSwap</h3>
           </div>
           <p class="main" style="margin-top:18px;">
-            Want early access, entrepreneurship perks, and a chance to be part of the first group on the app? Reach out below and we’ll filter early interest through our email.
+            Want early access, entrepreneurship perks, and a shot at being one of the first people on the app? Reach out below.
           </p>
 
           <a
@@ -1072,16 +1137,25 @@
             <h3>Starting with Penn State energy</h3>
           </div>
           <p class="main" style="margin-top:18px;">
-            StateSwap is aiming to start with a strong Penn State student audience while growing into a larger student-to-student marketplace model over time. The goal is to build something useful, trusted, and student-driven from day one.
+            StateSwap is starting with a Penn State-centered audience and growing from there. The goal is to build something useful, trusted, and student-driven from day one.
           </p>
 
           <div class="disclaimer">
-            <strong>Disclaimer:</strong> StateSwap is student-focused and Penn State-centered in its early vision, but it is not officially affiliated with, endorsed by, or operated by Penn State at this time.
+            <strong>Disclaimer:</strong> StateSwap is student-focused and Penn State-centered in its early vision, but it is not officially affiliated with, endorsed by, or operated by Penn State.
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <div class="floating-cta">
+    <a
+      class="btn btn-primary"
+      href="mailto:happyvalleyllc@gmail.com?subject=StateSwap Early Entrepreneurship Program&body=Hi StateSwap,%0D%0A%0D%0AI want early access to the app and the entrepreneurship program.%0D%0A%0D%0AName:%0D%0ASchool:%0D%0AInstagram or phone:%0D%0AWhat I want to sell, promote, or use StateSwap for:%0D%0A%0D%0AThanks!"
+    >
+      Join Early Program 🚀
+    </a>
+  </div>
 
   <footer>
     <div class="container">
