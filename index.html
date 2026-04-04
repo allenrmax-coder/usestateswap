@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StateSwap | Student Marketplace</title>
+  <meta
+    name="description"
+    content="StateSwap is a peer-to-peer marketplace app for students, by students. Buy, sell, swap, and promote student-run services in a safer campus-focused community."
+  />
+  <style>
+    :root {
+      --bg: #071120;
+      --bg-soft: #0d1b34;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-strong: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.76);
+      --subtle: rgba(255, 255, 255, 0.55);
+      --border: rgba(130, 175, 255, 0.16);
+      --blue-dark: #0a2a66;
+      --blue-mid: #1f5fbf;
+      --blue-light: #5ea2ff;
+      --blue-ice: #dbeafe;
+      --green: #34d399;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(31, 95, 191, 0.18), transparent 22%),
+        radial-gradient(circle at 85% 20%, rgba(94, 162, 255, 0.18), transparent 25%),
+        radial-gradient(circle at 52% 50%, rgba(10, 42, 102, 0.18), transparent 24%),
+        linear-gradient(180deg, #06101e 0%, #09172c 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .blur-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 260px;
+      height: 260px;
+      background: rgba(31, 95, 191, 0.2);
+      top: 60px;
+      left: -80px;
+    }
+
+    .orb-2 {
+      width: 320px;
+      height: 320px;
+      background: rgba(94, 162, 255, 0.2);
+      top: 140px;
+      right: -100px;
+      animation-delay: 1s;
+    }
+
+    .orb-3 {
+      width: 260px;
+      height: 260px;
+      background: rgba(10, 42, 102, 0.22);
+      top: 500px;
+      left: 35%;
+      animation-delay: 2s;
+    }
+
+    @keyframes floatOrb {
+      from { transform: translateY(0) translateX(0) scale(1); }
+      to { transform: translateY(20px) translateX(10px) scale(1.08); }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(6, 16, 30, 0.8);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 82px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-box-image {
+      width: 68px;
+      height: 68px;
+      padding: 4px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .logo-box-image::before {
+      display: none;
+    }
+
+    .brand-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .logo-inner {
+      display: none;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: 1.1;
+    }
+
+    .brand-text p {
+      margin: 4px 0 0;
+      color: var(--subtle);
+      font-size: 0.82rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      align-items: center;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 18px;
+      padding: 14px 22px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-light), var(--blue-mid));
+      color: white;
+      box-shadow: 0 14px 34px rgba(31, 95, 191, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(94, 162, 255, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      color: white;
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 72px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-light), var(--blue-mid));
+      box-shadow: 0 0 18px rgba(94,162,255,0.75);
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--blue-light), var(--blue-ice), var(--blue-mid));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: block;
+    }
+
+    .hero p.main {
+      font-size: 1.14rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 24px 0 0;
+    }
+
+    .hero p.sub {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--subtle);
+      max-width: 620px;
+      margin: 14px 0 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .hero-logo-showcase {
+      margin-top: 26px;
+      width: 180px;
+      max-width: 100%;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      padding: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-logo-showcase img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+      max-width: 560px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.7rem;
+      color: var(--blue-ice);
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--subtle);
+      font-size: 0.92rem;
+    }
+
+    .phone {
+      position: relative;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 50%);
+      pointer-events: none;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .window-dots span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .window-dots span:nth-child(1) { background: #60a5fa; }
+    .window-dots span:nth-child(2) { background: #93c5fd; }
+    .window-dots span:nth-child(3) { background: #dbeafe; }
+
+    .phone-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      backdrop-filter: blur(12px);
+    }
+
+    .card-strong {
+      background: linear-gradient(135deg, rgba(94,162,255,0.18), rgba(31,95,191,0.16), rgba(10,42,102,0.24));
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .small-label {
+      color: var(--subtle);
+      font-size: 0.86rem;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      margin: 0 0 18px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: rgba(94, 162, 255, 0.14);
+      color: var(--blue-ice);
+      border: 1px solid rgba(94, 162, 255, 0.25);
+    }
+
+    .listing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mini-box {
+      background: rgba(0,0,0,0.18);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .mini-box strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.98rem;
+    }
+
+    .progress {
+      height: 11px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue-light), var(--blue-ice));
+      border-radius: 999px;
+      animation: loadBar 1.5s 0.7s forwards;
+    }
+
+    @keyframes loadBar {
+      to { width: 88%; }
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feature-mini {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+    }
+
+    .feature-mini h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .feature-mini p {
+      margin: 0;
+      color: var(--subtle);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 36px 0;
+    }
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
+    .section-kicker {
+      color: var(--subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.76rem;
+      margin-bottom: 10px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .three-grid,
+    .four-grid,
+    .two-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .three-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .four-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .two-grid {
+      grid-template-columns: 0.92fr 1.08fr;
+      align-items: start;
+    }
+
+    .step {
+      min-height: 250px;
+    }
+
+    .step-number {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.18);
+      margin-bottom: 18px;
+      line-height: 1;
+    }
+
+    .step h4,
+    .feature-card h4,
+    .contact-card h4 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .step p,
+    .feature-card p,
+    .contact-card p,
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .feature-card,
+    .info-card,
+    .contact-card {
+      min-height: 100%;
+    }
+
+    .launch-badge {
+      display: inline-block;
+      margin: 10px 0 16px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--blue-ice);
+      border: 1px solid rgba(94, 162, 255, 0.25);
+      background: rgba(94, 162, 255, 0.08);
+    }
+
+    .list-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+    }
+
+    .list-item span:last-child {
+      color: var(--subtle);
+      font-size: 1.1rem;
+    }
+
+    .safety-box {
+      padding: 26px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      backdrop-filter: blur(12px);
+    }
+
+    .safety-points {
+      display: grid;
+      gap: 12px;
+    }
+
+    .safety-point {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.16);
+      color: rgba(255,255,255,0.86);
+      line-height: 1.65;
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      border-radius: 999px;
+      background: rgba(94, 162, 255, 0.16);
+      border: 1px solid rgba(94, 162, 255, 0.22);
+      display: inline-grid;
+      place-items: center;
+      color: var(--blue-ice);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 18px;
+    }
+
+    .contact-link {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.18);
+      margin-top: 14px;
+      transition: 0.25s ease;
+    }
+
+    .contact-link:hover {
+      transform: translateY(-2px);
+      background: rgba(0,0,0,0.26);
+    }
+
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .disclaimer {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    footer {
+      padding: 28px 0 40px;
+      color: var(--subtle);
+      font-size: 0.92rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1020px) {
+      .hero-grid,
+      .two-grid,
+      .contact-wrap,
+      .phone-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .four-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .three-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .stats {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(100% - 20px, var(--max));
+      }
+
+      .stats,
+      .four-grid,
+      .list-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .nav {
+        min-height: 72px;
+      }
+
+      .brand-text p {
+        display: none;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .logo-box-image {
+        width: 58px;
+        height: 58px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="blur-orb orb-1"></div>
+  <div class="blur-orb orb-2"></div>
+  <div class="blur-orb orb-3"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <div class="logo-box logo-box-image">
+          <img src="IMG_5967.png" alt="StateSwap logo" class="brand-logo-img" />
+        </div>
+        <div class="brand-text">
+          <h1>StateSwap</h1>
+          <p>Student marketplace and early entrepreneurship community</p>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#safety">Safety</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a
+        class="btn btn-primary"
+        href="mailto:happyvalleyllc@gmail.com?subject=StateSwap Early Entrepreneurship Program&body=Hi StateSwap,%0D%0A%0D%0AI want to join the early entrepreneurship program and be part of the app early.%0D%0A%0D%0AName:%0D%0ASchool:%0D%0AInstagram or phone:%0D%0AWhat I want to sell, promote, or use StateSwap for:%0D%0A%0D%0AThanks!"
+      >
+        Join Early Entrepreneurship Program
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="fade-up">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Student-built marketplace for campus life
+          </div>
+
+          <h2>
+            Buy smarter.
+            <span class="gradient-text">Sell easier.</span>
+            Swap and connect.
+          </h2>
+
+          <p class="main">
+            StateSwap is a peer-to-peer marketplace app for students, by students. We are launching with a Penn State-centered community in mind, while making it clear that we are not officially affiliated with Penn State at this stage.
+          </p>
+
+          <p class="sub">
+            The goal is to give students one cleaner, safer place to list items, find campus deals, discover student-run services, and build more direct peer-to-peer connections.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              href="mailto:happyvalleyllc@gmail.com?subject=StateSwap Early Entrepreneurship Program&body=Hi StateSwap,%0D%0A%0D%0AI want early access to the app and the entrepreneurship program.%0D%0A%0D%0AName:%0D%0ASchool:%0D%0AInstagram or phone:%0D%0AWhat I want to sell, promote, or use StateSwap for:%0D%0A%0D%0AThanks!"
+            >
+              Join the Early Program
+            </a>
+            <a class="btn btn-secondary" href="#how">See How It Works</a>
+          </div>
+
+          <div class="hero-logo-showcase">
+            <img src="IMG_5967.png" alt="StateSwap logo" />
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>P2P</strong>
+              <span>Student-to-student</span>
+            </div>
+            <div class="stat">
+              <strong>Local</strong>
+              <span>Campus-first trust</span>
+            </div>
+            <div class="stat">
+              <strong>Built</strong>
+              <span>By students</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone fade-up">
+          <div class="window-dots">
+            <span></span><span></span><span></span>
+          </div>
+
+          <div class="phone-grid">
+            <div class="card">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:18px;">
+                <div>
+                  <div class="small-label">Featured community</div>
+                  <div class="title">Penn State student marketplace</div>
+                </div>
+                <span class="pill">Student-first</span>
+              </div>
+
+              <div class="card card-strong" style="padding:16px;">
+                <div class="listing-grid">
+                  <div class="mini-box">
+                    <div class="small-label">Current focus</div>
+                    <strong>Penn State students</strong>
+                  </div>
+                  <div class="mini-box">
+                    <div class="small-label">Built for</div>
+                    <strong>Listings + services</strong>
+                  </div>
+                </div>
+
+                <div class="mini-box">
+                  <div class="small-label">Community value</div>
+                  <div class="progress">
+                    <div class="progress-bar"></div>
+                  </div>
+                  <div style="margin-top:10px; color:var(--muted); line-height:1.65; font-size:0.95rem;">
+                    Built for student trust, simple connections, and a cleaner campus marketplace feel.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stack">
+              <div class="feature-mini">
+                <h4>Student verification</h4>
+                <p>Peer-to-peer trust starts with stronger identity checks and clearer profiles.</p>
+              </div>
+              <div class="feature-mini">
+                <h4>Marketplace + services</h4>
+                <p>Students can list items and offer services through one student-first platform.</p>
+              </div>
+              <div class="feature-mini">
+                <h4>Campus-first community</h4>
+                <p>A student-centered network designed to feel safer and more accountable than random public marketplaces.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="container">
+        <div class="section-head fade-up">
+          <div class="section-kicker">How it works</div>
+          <h3>A smarter student marketplace for campus life</h3>
+        </div>
+
+        <div class="three-grid">
+          <div class="card step fade-up">
+            <div class="step-number">01</div>
+            <h4>Create your student profile</h4>
+            <p>Create a profile that shows your school community, what you’re selling, what you’re looking for, or what service you offer.</p>
+          </div>
+
+          <div class="card step fade-up">
+            <div class="step-number">02</div>
+            <h4>Match with real students</h4>
+            <p>Browse student listings, discover useful services, and connect with people in your community more directly.</p>
+          </div>
+
+          <div class="card step fade-up">
+            <div class="step-number">03</div>
+            <h4>Connect with more confidence</h4>
+            <p>Peer-to-peer design, stronger trust signals, and student-centered transparency help make interactions feel safer and more accountable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container two-grid">
+        <div class="fade-up">
+          <div class="section-kicker">Why StateSwap</div>
+          <div class="launch-badge">Penn State-focused launch • not officially affiliated with Penn State</div>
+          <div class="section-head" style="margin-bottom:0;">
+            <h3>Built for the way students actually live</h3>
+          </div>
+          <p class="main" style="margin-top:18px; max-width:620px;">
+            Not just another marketplace. StateSwap is designed around the way students actually live: buying and selling essentials, finding useful student-run services, and making campus connections with less friction.
+          </p>
+        </div>
+
+        <div class="four-grid">
+          <div class="card feature-card fade-up">
+            <h4>Student marketplace</h4>
+            <p>Built for real student needs instead of broad, generic marketplace clutter.</p>
+          </div>
+
+          <div class="card feature-card fade-up">
+            <h4>Safer peer-to-peer experience</h4>
+            <p>Because it is built around student-to-student interactions, trust signals and clearer profiles can make the experience feel safer and more reliable.</p>
+          </div>
+
+          <div class="card feature-card fade-up">
+            <h4>Student services</h4>
+            <p>The platform can support student-run services alongside listings, helping small student businesses get discovered more easily.</p>
+          </div>
+
+          <div class="card feature-card fade-up">
+            <h4>No secrets on the frontend</h4>
+            <p>This landing page uses no exposed API keys, no embedded credentials, and no insecure client-side storage.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container safety-box fade-up" id="safety">
+        <div class="two-grid">
+          <div>
+            <div class="section-kicker">Safety + trust</div>
+            <div class="section-head" style="margin-bottom:0;">
+              <h3>Designed with privacy and security in mind</h3>
+            </div>
+            <p class="main" style="margin-top:18px;">
+              This version is a secure front-end landing page only. It does not expose API keys, secrets, admin credentials, or private infrastructure details in the code.
+            </p>
+          </div>
+
+          <div class="safety-points">
+            <div class="safety-point">
+              <span class="check">✓</span>
+              <span>No API keys embedded in the client code.</span>
+            </div>
+            <div class="safety-point">
+              <span class="check">✓</span>
+              <span>No fake login or unsafe data collection forms.</span>
+            </div>
+            <div class="safety-point">
+              <span class="check">✓</span>
+              <span>Peer-to-peer trust is supported by clearer community identity and student-centered design.</span>
+            </div>
+            <div class="safety-point">
+              <span class="check">✓</span>
+              <span>Easy to connect to secure back-end endpoints later if you build a full app.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container card fade-up" style="padding:28px;">
+        <div class="two-grid">
+          <div>
+            <div class="section-kicker">What students need most</div>
+            <div class="section-head" style="margin-bottom:0;">
+              <h3>One place for student listings, services, and campus connections</h3>
+            </div>
+          </div>
+
+          <div class="list-grid">
+            <div class="list-item"><span>Student item listings</span><span>→</span></div>
+            <div class="list-item"><span>Student-run services</span><span>→</span></div>
+            <div class="list-item"><span>Campus deals and finds</span><span>→</span></div>
+            <div class="list-item"><span>Peer-to-peer exchanges</span><span>→</span></div>
+            <div class="list-item"><span>Service discovery</span><span>→</span></div>
+            <div class="list-item"><span>Student business visibility</span><span>→</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-wrap">
+        <div class="card contact-card fade-up">
+          <div class="section-kicker">Contact</div>
+          <div class="section-head" style="margin-bottom:0;">
+            <h3>Join early and help shape StateSwap</h3>
+          </div>
+          <p class="main" style="margin-top:18px;">
+            Want early access, entrepreneurship perks, and a chance to be part of the first group on the app? Reach out below and we’ll filter early interest through our email.
+          </p>
+
+          <a
+            class="contact-link"
+            href="mailto:happyvalleyllc@gmail.com?subject=StateSwap Early Entrepreneurship Program&body=Hi StateSwap,%0D%0A%0D%0AI want to join the early entrepreneurship program and learn more.%0D%0A%0D%0AName:%0D%0ASchool:%0D%0AInstagram or phone:%0D%0AWhat I want to sell, promote, or use StateSwap for:%0D%0A%0D%0AThanks!"
+          >
+            <div class="contact-icon">✉</div>
+            <div>
+              <div class="small-label">Email</div>
+              <div style="font-weight:700;">happyvalleyllc@gmail.com</div>
+            </div>
+          </a>
+
+          <a class="contact-link" href="https://instagram.com/stateswap_psu" target="_blank" rel="noopener noreferrer">
+            <div class="contact-icon">◎</div>
+            <div>
+              <div class="small-label">Instagram</div>
+              <div style="font-weight:700;">@stateswap_psu</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="card info-card fade-up" style="background: linear-gradient(135deg, rgba(94,162,255,0.10), rgba(31,95,191,0.10), rgba(10,42,102,0.18));">
+          <div class="section-kicker">Launch vision</div>
+          <div class="section-head" style="margin-bottom:0;">
+            <h3>Starting with Penn State energy</h3>
+          </div>
+          <p class="main" style="margin-top:18px;">
+            StateSwap is aiming to start with a strong Penn State student audience while growing into a larger student-to-student marketplace model over time. The goal is to build something useful, trusted, and student-driven from day one.
+          </p>
+
+          <div class="disclaimer">
+            <strong>Disclaimer:</strong> StateSwap is student-focused and Penn State-centered in its early vision, but it is not officially affiliated with, endorsed by, or operated by Penn State at this time.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 StateSwap. Built for students, by students.
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
