@@ -1,0 +1,161 @@
+{
+  "site": {
+    "name": "StateSwap",
+    "tagline": "The Student Marketplace for Penn State",
+    "description": "Buy, sell, and offer services on campus — the smarter way.",
+    "googleSheetsUrl": "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE",
+    "instagram": "https://instagram.com/usestateswap",
+    "email": "hello@usestateswap.com"
+  },
+  "nav": {
+    "links": [
+      { "label": "How It Works", "href": "#how-it-works" },
+      { "label": "For Sellers", "href": "#for-entrepreneurs" },
+      { "label": "Why StateSwap", "href": "#why-stateswap" }
+    ],
+    "cta": "Join Early"
+  },
+  "hero": {
+    "badge": "Coming to Penn State",
+    "headline": "The Marketplace Built for Campus Life",
+    "subheadline": "Buy, sell, and offer services between students — faster, smarter, and more campus-native than anything else out there.",
+    "primaryCta": "Get Early Access",
+    "secondaryCta": "See How It Works",
+    "stats": [
+      { "value": "500+", "label": "Early Signups" },
+      { "value": "50+", "label": "Founding Sellers" },
+      { "value": "2025", "label": "Launch Year" }
+    ]
+  },
+  "howItWorks": {
+    "badge": "Simple by Design",
+    "headline": "Up and running in minutes",
+    "subheadline": "Whether you're buying, selling, or building a campus business — StateSwap makes it effortless.",
+    "steps": [
+      {
+        "number": "01",
+        "icon": "UserPlus",
+        "title": "Create Your Profile",
+        "description": "Sign up with your Penn State email. Verified students only — so you know exactly who you're dealing with."
+      },
+      {
+        "number": "02",
+        "icon": "Package",
+        "title": "List Items or Services",
+        "description": "Post what you're selling or the services you offer. Photos, prices, availability — all in under 2 minutes."
+      },
+      {
+        "number": "03",
+        "icon": "Zap",
+        "title": "Connect & Transact",
+        "description": "Match with buyers or clients on campus. Message, meet, and complete the deal safely within the community."
+      }
+    ]
+  },
+  "categories": {
+    "badge": "What's on StateSwap",
+    "headline": "Items & Services, One Platform",
+    "subheadline": "From textbooks to tutoring — StateSwap handles both sides of campus commerce.",
+    "items": {
+      "title": "Buy & Sell Items",
+      "description": "Textbooks, furniture, electronics, clothing, dorm gear — everything a Penn Stater needs at Penn State prices.",
+      "features": [
+        "Textbooks & course materials",
+        "Dorm furniture & decor",
+        "Electronics & tech",
+        "Clothing & fashion",
+        "Sports & recreation gear",
+        "Campus deal boards"
+      ]
+    },
+    "services": {
+      "title": "Offer Services",
+      "description": "Turn your skills into income. Offer tutoring, photography, design, food delivery, and more to your campus community.",
+      "features": [
+        "Tutoring & academic help",
+        "Photography & videography",
+        "Graphic design & branding",
+        "Food prep & meal plans",
+        "Rides & errand running",
+        "Music lessons & coaching"
+      ]
+    }
+  },
+  "whyStateSwap": {
+    "badge": "Why We're Different",
+    "headline": "Built different. Built for you.",
+    "subheadline": "Not just another Craigslist. StateSwap is designed from the ground up for the campus experience.",
+    "cards": [
+      {
+        "icon": "Shield",
+        "title": "Verified Students Only",
+        "description": "Every user is a verified Penn State student. No randoms, no scammers — just your campus community."
+      },
+      {
+        "icon": "Sparkles",
+        "title": "Clean, Modern Experience",
+        "description": "A marketplace that actually looks good. No clutter, no spam posts — just clean listings and fast discovery."
+      },
+      {
+        "icon": "Briefcase",
+        "title": "Services Are First-Class",
+        "description": "Unlike eBay or Facebook Marketplace, services are a core feature — not an afterthought."
+      },
+      {
+        "icon": "Users",
+        "title": "Early Community Perks",
+        "description": "Founding members get lifetime priority placement, free promotions, and early access to every new feature we ship."
+      }
+    ]
+  },
+  "forEntrepreneurs": {
+    "badge": "For Student Entrepreneurs",
+    "headline": "Turn Your Skill Into a Campus Business",
+    "subheadline": "StateSwap gives ambitious Penn State students the platform to launch, grow, and monetize their services — before graduation.",
+    "benefits": [
+      "Zero platform fees during beta",
+      "Built-in student audience of thousands",
+      "Profile & portfolio for your services",
+      "Reviews & reputation system",
+      "Priority listing in launch week",
+      "Direct messaging with clients"
+    ],
+    "cta": "Become a Founding Seller",
+    "secondaryCta": "Learn more"
+  },
+  "launchTimeline": {
+    "badge": "Launch Timeline",
+    "headline": "Coming Soon to Penn State",
+    "subheadline": "We're building something big. Here's where we are.",
+    "milestones": [
+      { "label": "Private Beta", "date": "Fall 2025", "status": "upcoming", "description": "Founding sellers & early users only" },
+      { "label": "Campus Launch", "date": "Spring 2026", "status": "upcoming", "description": "Full launch across Penn State" },
+      { "label": "Multi-Campus", "date": "Fall 2026", "status": "future", "description": "Expanding to more Big Ten schools" }
+    ]
+  },
+  "joinEarly": {
+    "badge": "Limited Spots",
+    "headline": "Be First. Get the Edge.",
+    "subheadline": "Join the waitlist and lock in your founding member status before we launch.",
+    "formTitle": "Claim Your Spot",
+    "fields": {
+      "name": "Full Name",
+      "email": "Penn State Email",
+      "role": "I want to...",
+      "roleOptions": ["Buy & sell items", "Offer services", "Both — buy/sell and offer services"],
+      "services": "What would you sell or offer? (optional)",
+      "studentStatus": "Student Status",
+      "studentStatusOptions": ["Current undergrad", "Grad student", "Faculty/Staff", "Alumni"]
+    },
+    "submitText": "Claim My Early Access",
+    "successMessage": "You're on the list! We'll reach out before launch."
+  },
+  "footer": {
+    "tagline": "The student marketplace for Penn State.",
+    "links": [
+      { "label": "Instagram", "href": "https://instagram.com/usestateswap" },
+      { "label": "Contact", "href": "mailto:hello@usestateswap.com" }
+    ],
+    "copyright": "© 2025 StateSwap. Built at Penn State."
+  }
+}
