@@ -1533,8 +1533,9 @@
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
     // ---- Waitlist form -> Google Sheet via Apps Script ----
-    // PASTE YOUR APPS SCRIPT WEB APP URL HERE (see SETUP.md):
-    const SHEET_ENDPOINT = https://script.google.com/macros/s/AKfycbyOCgSHZGiUK-fwRQUE1Ut5hiNa9MR2w0rvqwJKsH1PkIhz4QbpLKD4tcMZRHhe0SJVIA/exec;
+    // Paste your Apps Script Web App URL here (looks like
+    // https://script.google.com/macros/s/AKfyc.../exec):
+    const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyOCgSHZGiUK-fwRQUE1Ut5hiNa9MR2w0rvqwJKsH1PkIhz4QbpLKD4tcMZRHhe0SJVIA/exec';
 
     const form = document.getElementById('signupForm');
     const successBox = document.getElementById('formSuccess');
@@ -1565,7 +1566,7 @@
       const isEdu = email.endsWith('.edu') || email.endsWith('@psu.edu');
 
       if (SHEET_ENDPOINT === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
-        return showError('Form is not connected yet. See SETUP.md to wire up the Google Sheet.');
+        return showError('Form is not connected yet.');
       }
 
       submitBtn.disabled = true;
@@ -1589,7 +1590,7 @@
       } catch (err) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Join the waitlist →';
-        showError('Something went wrong. Email marketvalleyllc@gmail.com and we\'ll add you manually.');
+        showError("Couldn't submit. Try again, or email marketvalleyllc@gmail.com and we'll add you manually.");
       }
     });
   </script>
