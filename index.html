@@ -195,19 +195,23 @@
       min-width: 0;
     }
     .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: white;
-      display: grid;
-      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
       flex-shrink: 0;
-      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.20), 0 0 0 1px rgba(255,255,255,0.1);
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(59, 130, 246, 0.32), 0 0 0 1px rgba(120, 170, 255, 0.28);
+      transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    }
+    .brand:hover .brand-mark {
+      transform: scale(1.04);
+      box-shadow: 0 10px 28px rgba(59, 130, 246, 0.5), 0 0 0 1px rgba(120, 170, 255, 0.5);
     }
     .brand-mark img {
-      width: 30px;
-      height: 30px;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .brand-name {
       font-weight: 800;
@@ -359,16 +363,12 @@
     }
     .hero-globe:hover .globe-arrows { animation-duration: 5s; }
 
-    .globe-arrows .arrow-line {
-      stroke: url(#arrowGrad);
-      stroke-width: 5;
-      fill: none;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.7));
+    .globe-arrows .arrow-streak {
+      mix-blend-mode: screen;
     }
-    .globe-arrows .arrow-head {
-      fill: #60A5FA;
-      filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.9));
+    .globe-arrows .arrow-highlight {
+      mix-blend-mode: screen;
+      opacity: 0.85;
     }
 
     .globe-core {
@@ -953,7 +953,7 @@
     <div class="container nav">
       <a href="#" class="brand" aria-label="StateSwap home">
         <div class="brand-mark">
-          <img src="lion-logo.png" alt="" />
+          <img src="IMG_5967.png" alt="" />
         </div>
         <div class="brand-name">StateSwap</div>
       </a>
@@ -1010,22 +1010,133 @@
           <div class="globe-tilt">
             <svg class="globe-arrows" viewBox="-200 -200 400 400" aria-hidden="true">
               <defs>
-                <linearGradient id="arrowGrad" x1="-200" y1="-200" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%"   stop-color="#93C5FD"/>
-                  <stop offset="50%"  stop-color="#60A5FA"/>
-                  <stop offset="100%" stop-color="#2563EB"/>
+                <linearGradient id="holoGrad" x1="-200" y1="-200" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%"   stop-color="#5EEAD4">
+                    <animate attributeName="stop-color"
+                             values="#5EEAD4;#60A5FA;#A78BFA;#F472B6;#FBBF24;#5EEAD4"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
+                  <stop offset="33%"  stop-color="#60A5FA">
+                    <animate attributeName="stop-color"
+                             values="#60A5FA;#A78BFA;#F472B6;#FBBF24;#5EEAD4;#60A5FA"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
+                  <stop offset="66%"  stop-color="#A78BFA">
+                    <animate attributeName="stop-color"
+                             values="#A78BFA;#F472B6;#FBBF24;#5EEAD4;#60A5FA;#A78BFA"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
+                  <stop offset="100%" stop-color="#F472B6">
+                    <animate attributeName="stop-color"
+                             values="#F472B6;#FBBF24;#5EEAD4;#60A5FA;#A78BFA;#F472B6"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
                 </linearGradient>
+
+                <linearGradient id="holoGradFlipped" x1="200" y1="200" x2="-200" y2="-200" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%"   stop-color="#A78BFA">
+                    <animate attributeName="stop-color"
+                             values="#A78BFA;#F472B6;#FBBF24;#5EEAD4;#60A5FA;#A78BFA"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
+                  <stop offset="50%"  stop-color="#F472B6">
+                    <animate attributeName="stop-color"
+                             values="#F472B6;#FBBF24;#5EEAD4;#60A5FA;#A78BFA;#F472B6"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
+                  <stop offset="100%" stop-color="#FBBF24">
+                    <animate attributeName="stop-color"
+                             values="#FBBF24;#5EEAD4;#60A5FA;#A78BFA;#F472B6;#FBBF24"
+                             dur="6s" repeatCount="indefinite"/>
+                  </stop>
+                </linearGradient>
+
+                <filter id="holoBlur" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="6"/>
+                </filter>
+
+                <filter id="holoSoftBlur" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="2"/>
+                </filter>
               </defs>
-              <!-- Top-right curved arrow -->
+
+              <!-- ====== Top-right arrow (3 stacked layers + streak + head) ====== -->
+              <!-- Outer chromatic halo -->
+              <path class="arrow-halo"
+                    d="M -12 -178 A 178 178 0 0 1 178 12"
+                    stroke="url(#holoGrad)" stroke-width="14"
+                    fill="none" stroke-linecap="round" opacity="0.35"
+                    filter="url(#holoBlur)"/>
+              <!-- Mid glow layer -->
+              <path class="arrow-glow"
+                    d="M -12 -178 A 178 178 0 0 1 178 12"
+                    stroke="url(#holoGrad)" stroke-width="8"
+                    fill="none" stroke-linecap="round" opacity="0.65"
+                    filter="url(#holoSoftBlur)"/>
+              <!-- Crisp main stroke -->
               <path class="arrow-line"
-                    d="M -12 -178 A 178 178 0 0 1 178 12"/>
+                    d="M -12 -178 A 178 178 0 0 1 178 12"
+                    stroke="url(#holoGrad)" stroke-width="3.6"
+                    fill="none" stroke-linecap="round"/>
+              <!-- Inner highlight ridge -->
+              <path class="arrow-highlight"
+                    d="M -12 -178 A 178 178 0 0 1 178 12"
+                    stroke="rgba(255,255,255,0.78)" stroke-width="1.2"
+                    fill="none" stroke-linecap="round"/>
+              <!-- Traveling light streak -->
+              <path class="arrow-streak"
+                    d="M -12 -178 A 178 178 0 0 1 178 12"
+                    stroke="rgba(255,255,255,0.95)" stroke-width="3"
+                    fill="none" stroke-linecap="round"
+                    stroke-dasharray="22 520" stroke-dashoffset="0">
+                <animate attributeName="stroke-dashoffset"
+                         from="0" to="-540" dur="3s" repeatCount="indefinite"/>
+              </path>
+              <!-- Holographic arrowhead -->
               <polygon class="arrow-head"
-                       points="158,-12 184,12 156,32"/>
-              <!-- Bottom-left curved arrow -->
+                       points="158,-12 188,12 156,32"
+                       fill="url(#holoGrad)"
+                       filter="url(#holoSoftBlur)" opacity="0.55"/>
+              <polygon points="158,-12 188,12 156,32"
+                       fill="url(#holoGrad)"/>
+              <polygon points="166,-2 178,12 164,22"
+                       fill="rgba(255,255,255,0.55)"/>
+
+              <!-- ====== Bottom-left arrow (mirror, flipped gradient) ====== -->
+              <path class="arrow-halo"
+                    d="M 12 178 A 178 178 0 0 1 -178 -12"
+                    stroke="url(#holoGradFlipped)" stroke-width="14"
+                    fill="none" stroke-linecap="round" opacity="0.35"
+                    filter="url(#holoBlur)"/>
+              <path class="arrow-glow"
+                    d="M 12 178 A 178 178 0 0 1 -178 -12"
+                    stroke="url(#holoGradFlipped)" stroke-width="8"
+                    fill="none" stroke-linecap="round" opacity="0.65"
+                    filter="url(#holoSoftBlur)"/>
               <path class="arrow-line"
-                    d="M 12 178 A 178 178 0 0 1 -178 -12"/>
+                    d="M 12 178 A 178 178 0 0 1 -178 -12"
+                    stroke="url(#holoGradFlipped)" stroke-width="3.6"
+                    fill="none" stroke-linecap="round"/>
+              <path class="arrow-highlight"
+                    d="M 12 178 A 178 178 0 0 1 -178 -12"
+                    stroke="rgba(255,255,255,0.78)" stroke-width="1.2"
+                    fill="none" stroke-linecap="round"/>
+              <path class="arrow-streak"
+                    d="M 12 178 A 178 178 0 0 1 -178 -12"
+                    stroke="rgba(255,255,255,0.95)" stroke-width="3"
+                    fill="none" stroke-linecap="round"
+                    stroke-dasharray="22 520" stroke-dashoffset="-260">
+                <animate attributeName="stroke-dashoffset"
+                         from="-260" to="-800" dur="3s" repeatCount="indefinite"/>
+              </path>
               <polygon class="arrow-head"
-                       points="-158,12 -184,-12 -156,-32"/>
+                       points="-158,12 -188,-12 -156,-32"
+                       fill="url(#holoGradFlipped)"
+                       filter="url(#holoSoftBlur)" opacity="0.55"/>
+              <polygon points="-158,12 -188,-12 -156,-32"
+                       fill="url(#holoGradFlipped)"/>
+              <polygon points="-166,2 -178,-12 -164,-22"
+                       fill="rgba(255,255,255,0.55)"/>
             </svg>
 
             <div class="globe-core">
