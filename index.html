@@ -7,7 +7,8 @@
   <meta name="description" content="StateSwap is a student-only marketplace built for Penn State. Buy, sell, and swap textbooks, dorm gear, tickets, and services with people on your campus — not strangers." />
   <meta name="theme-color" content="#050B17" />
 
-  <link rel="icon" href="favicon_stateswap.png" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="any" href="favicon_stateswap.png" />
   <link rel="apple-touch-icon" href="favicon_stateswap.png" />
 
   <meta property="og:title" content="StateSwap — The student marketplace built for Penn State" />
@@ -19,6 +20,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
     :root {
@@ -176,47 +179,29 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(20px) saturate(140%);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
-      background: rgba(5, 11, 23, 0.75);
-      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      background: rgba(5, 11, 23, 0.55);
+      border-bottom: 1px solid rgba(120, 170, 255, 0.06);
     }
     .nav {
-      min-height: 72px;
+      min-height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
     }
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
       min-width: 0;
+      transition: opacity 0.2s var(--ease);
     }
-    .brand-mark {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      flex-shrink: 0;
-      overflow: hidden;
-      box-shadow: 0 8px 22px rgba(59, 130, 246, 0.32), 0 0 0 1px rgba(120, 170, 255, 0.28);
-      transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
-    }
-    .brand:hover .brand-mark {
-      transform: scale(1.04);
-      box-shadow: 0 10px 28px rgba(59, 130, 246, 0.5), 0 0 0 1px rgba(120, 170, 255, 0.5);
-    }
-    .brand-mark img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .brand:hover { opacity: 0.82; }
     .brand-name {
       font-weight: 800;
-      font-size: 1.08rem;
-      letter-spacing: -0.025em;
+      font-size: 1.12rem;
+      letter-spacing: -0.03em;
     }
     .nav-links {
       display: flex;
@@ -778,6 +763,24 @@
       flex: 1;
       min-width: 200px;
     }
+    /* Honeypot — invisible to humans, bots will fill it */
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .turnstile-wrap {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin-top: 4px;
+      min-height: 65px;
+    }
+
     .form-status {
       grid-column: 1 / -1;
       padding: 12px 14px;
@@ -952,9 +955,6 @@
   <header>
     <div class="container nav">
       <a href="#" class="brand" aria-label="StateSwap home">
-        <div class="brand-mark">
-          <img src="IMG_5967.png" alt="" />
-        </div>
         <div class="brand-name">StateSwap</div>
       </a>
 
@@ -974,11 +974,6 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="reveal show">
-          <div class="pill">
-            <span class="pill-badge"><span class="pill-dot"></span>Early access open</span>
-            <span>Penn State, Fall 2026</span>
-          </div>
-
           <h1>
             The student marketplace built for <span class="grad-text">Penn State.</span>
           </h1>
@@ -1278,8 +1273,8 @@
 
     <!-- FOR SELLERS / ENTREPRENEURS -->
     <section id="sellers">
-      <div class="container split">
-        <div class="reveal">
+      <div class="container">
+        <div class="reveal" style="max-width: 720px;">
           <span class="eyebrow">For student sellers</span>
           <h2>Your side hustle, <span class="grad-text">already on campus.</span></h2>
           <p style="color: var(--muted); margin-top: 16px; font-size: 1.04rem; line-height: 1.65; margin-bottom: 32px;">
@@ -1313,19 +1308,6 @@
           <a class="btn btn-primary" href="#waitlist" style="margin-top: 28px;">
             Apply as a founding seller →
           </a>
-        </div>
-
-        <div class="quote-card reveal">
-          <p class="quote-text">
-            I sell custom screen-printed shirts out of my dorm. Posting on Facebook Marketplace gets you flagged for &lsquo;commercial activity.&rsquo; StateSwap is the first place that actually wants student businesses on it.
-          </p>
-          <div class="quote-author">
-            <div class="author-avatar">DK</div>
-            <div>
-              <div class="author-name">Devin K.</div>
-              <div class="author-meta">Penn State '27 · Founding seller</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -1375,6 +1357,22 @@
             <div class="field full">
               <label for="useCase">What would you list or look for? <span style="color: var(--subtle); font-weight: 400;">(optional)</span></label>
               <textarea id="useCase" name="useCase" placeholder="e.g. 'Selling my mini fridge after this semester' or 'Looking for a Spanish tutor'"></textarea>
+            </div>
+
+            <!-- Honeypot: bots fill this, humans never see it -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="company">Company (leave blank)</label>
+              <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <!-- Cloudflare Turnstile -->
+            <div class="turnstile-wrap">
+              <div class="cf-turnstile"
+                   data-sitekey="0x4AAAAAADU9ltonA8WpzsNF"
+                   data-theme="dark"
+                   data-callback="onTurnstileSuccess"
+                   data-error-callback="onTurnstileError"
+                   data-expired-callback="onTurnstileExpired"></div>
             </div>
 
             <div class="form-status" id="formStatus" role="alert"></div>
@@ -1438,12 +1436,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div class="brand-mark">
-              <img src="lion-logo.png" alt="" />
-            </div>
-            <div class="brand-name">StateSwap</div>
-          </div>
+          <div class="brand-name">StateSwap</div>
           <p>The student marketplace built for Penn State. Made by students, for students.</p>
           <p style="margin-top: 12px; font-size: 0.84rem;">Not officially affiliated with The Pennsylvania State University.</p>
         </div>
@@ -1542,6 +1535,11 @@
     const statusBox = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
 
+    let turnstileToken = '';
+    window.onTurnstileSuccess = (token) => { turnstileToken = token; clearError(); };
+    window.onTurnstileError = () => { turnstileToken = ''; };
+    window.onTurnstileExpired = () => { turnstileToken = ''; };
+
     function showError(msg) {
       statusBox.textContent = msg;
       statusBox.className = 'form-status error';
@@ -1551,19 +1549,35 @@
       statusBox.className = 'form-status';
     }
 
+    // Reject obviously-bogus emails. .edu enforced; common typos blocked.
+    function isValidEduEmail(email) {
+      if (!email || !email.includes('@')) return false;
+      const parts = email.split('@');
+      if (parts.length !== 2) return false;
+      const [local, domain] = parts;
+      if (local.length < 2 || domain.length < 4) return false;
+      return domain.endsWith('.edu');
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearError();
 
-      // Basic client-side validation
+      // Honeypot: if filled, silently "succeed" so bots don't learn they're caught
+      if (form.company && form.company.value) {
+        form.style.display = 'none';
+        successBox.classList.add('show');
+        return;
+      }
+
+      const name = form.name.value.trim();
       const email = form.email.value.trim().toLowerCase();
-      if (!form.name.value.trim()) return showError('Please enter your name.');
-      if (!email || !email.includes('@')) return showError('Please enter a valid email.');
+
+      if (!name || name.length < 2) return showError('Please enter your full name.');
+      if (!isValidEduEmail(email)) return showError('Please use a valid .edu email address (Penn State students: use your @psu.edu email).');
       if (!form.year.value) return showError('Please select your year.');
       if (!form.role.value) return showError('Please tell us what you want to do.');
-
-      // Soft .edu check (warn, don't block)
-      const isEdu = email.endsWith('.edu') || email.endsWith('@psu.edu');
+      if (!turnstileToken) return showError('Please complete the verification challenge above.');
 
       if (SHEET_ENDPOINT === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
         return showError('Form is not connected yet.');
@@ -1576,7 +1590,8 @@
         const data = new FormData(form);
         data.append('source', 'usestateswap.com');
         data.append('submittedAt', new Date().toISOString());
-        data.append('eduFlag', isEdu ? 'yes' : 'no');
+        data.append('eduFlag', 'yes');
+        data.append('cfToken', turnstileToken);
 
         await fetch(SHEET_ENDPOINT, {
           method: 'POST',
@@ -1590,6 +1605,9 @@
       } catch (err) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Join the waitlist →';
+        // Reset Turnstile so they can re-verify on retry
+        if (window.turnstile) window.turnstile.reset();
+        turnstileToken = '';
         showError("Couldn't submit. Try again, or email marketvalleyllc@gmail.com and we'll add you manually.");
       }
     });

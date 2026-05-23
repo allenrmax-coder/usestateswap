@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="StateSwap">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F1B33"/>
+      <stop offset="100%" stop-color="#1E3A6B"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#A5C9FF"/>
+      <stop offset="55%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="30%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+      <stop offset="60%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- App-icon rounded background -->
+  <rect width="100" height="100" rx="22" ry="22" fill="url(#bg)"/>
+
+  <!-- Subtle bevel border -->
+  <rect x="0.5" y="0.5" width="99" height="99" rx="21.5" ry="21.5"
+        fill="none" stroke="rgba(120,170,255,0.35)" stroke-width="1"/>
+
+  <!-- Bold S, drawn as path so it's font-independent -->
+  <!-- Geometry: 78px tall, centered. Outer width 60, stroke-feeling width ~14 -->
+  <path fill="url(#ink)" d="
+    M 71 26
+    C 71 19, 65 14, 56 14
+    L 41 14
+    C 30 14, 22 22, 22 32
+    C 22 41, 28 47, 38 49
+    L 56 53
+    C 61 54, 62 56, 62 59
+    C 62 63, 59 65, 53 65
+    L 32 65
+    C 30 65, 29 66, 29 68
+    L 29 80
+    C 29 82, 30 83, 32 83
+    L 57 83
+    C 70 83, 78 75, 78 64
+    C 78 54, 72 48, 61 46
+    L 44 42
+    C 39 41, 38 39, 38 36
+    C 38 33, 41 32, 45 32
+    L 67 32
+    C 69 32, 71 30, 71 28
+    Z"/>
+
+  <!-- Glassy top-left highlight -->
+  <rect width="100" height="100" rx="22" ry="22" fill="url(#shine)" pointer-events="none"/>
+</svg>
