@@ -104,6 +104,24 @@
       z-index: 2;
     }
 
+    /* Skip-to-content link for keyboard / screen-reader users */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      background: var(--blue-4);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      z-index: 100;
+      transition: top 0.2s var(--ease);
+    }
+    .skip-link:focus {
+      top: 12px;
+      outline: 2px solid #fff;
+    }
+
     /* ---------- TYPOGRAPHY ---------- */
     h1, h2, h3, h4 {
       letter-spacing: -0.025em;
@@ -952,6 +970,7 @@
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
   <header>
     <div class="container nav">
       <a href="#" class="brand" aria-label="StateSwap home">
@@ -969,7 +988,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <!-- HERO -->
     <section class="hero">
       <div class="container hero-grid">
@@ -1378,7 +1397,7 @@
             <div class="form-status" id="formStatus" role="alert"></div>
 
             <div class="form-submit-row">
-              <span class="form-fine">We'll only email about StateSwap. No spam. Unsubscribe anytime.</span>
+              <span class="form-fine">We'll only email about StateSwap. No spam. By joining, you agree to our <a href="/privacy.html" style="color: var(--blue-2); text-decoration: underline;">Privacy Policy</a> and <a href="/terms.html" style="color: var(--blue-2); text-decoration: underline;">Terms</a>.</span>
               <button type="submit" class="btn btn-primary" id="submitBtn">
                 Join the waitlist →
               </button>
@@ -1459,7 +1478,11 @@
 
       <div class="footer-bottom">
         <div>© 2026 StateSwap · Market Valley LLC</div>
-        <div>Made in Happy Valley</div>
+        <div style="display: flex; gap: 18px; flex-wrap: wrap;">
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <span>Made in Happy Valley</span>
+        </div>
       </div>
     </div>
   </footer>
